@@ -10,6 +10,11 @@ public class PlayerToolSwitcher : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            animator.SetInteger("Tool", currentTool);
+        }
     }
 
     void Update()
@@ -17,18 +22,36 @@ public class PlayerToolSwitcher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentTool = 1;
+
+            if (animator != null)
+            {
+                animator.SetInteger("Tool", currentTool);
+            }
+
             Debug.Log("Selected Scissor");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentTool = 2;
+
+            if (animator != null)
+            {
+                animator.SetInteger("Tool", currentTool);
+            }
+
             Debug.Log("Selected Bag");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             currentTool = 0;
+
+            if (animator != null)
+            {
+                animator.SetInteger("Tool", currentTool);
+            }
+
             Debug.Log("Selected None");
         }
 
@@ -36,12 +59,20 @@ public class PlayerToolSwitcher : MonoBehaviour
         {
             if (currentTool == 1)
             {
-                animator.SetTrigger("Cut");
+                if (animator != null)
+                {
+                    animator.SetTrigger("Cut");
+                }
+
                 TryRescueAnimal();
             }
             else if (currentTool == 2)
             {
-                animator.SetTrigger("BagUse");
+                if (animator != null)
+                {
+                    animator.SetTrigger("BagUse");
+                }
+
                 TryCollectTrash();
             }
         }
@@ -68,9 +99,10 @@ public class PlayerToolSwitcher : MonoBehaviour
             }
         }
     }
+
     void TryCollectTrash()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.2f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRadius);
 
         foreach (Collider2D hit in hits)
         {
