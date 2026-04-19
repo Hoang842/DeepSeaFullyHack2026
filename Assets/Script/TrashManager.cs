@@ -28,7 +28,6 @@ public class TrashManager : MonoBehaviour
     {
         TrashCollect[] trash = FindObjectsByType<TrashCollect>(FindObjectsSortMode.None);
         totalTrash = trash.Length;
-
         collectedTrash = 0;
         UpdateUI();
     }
@@ -37,6 +36,7 @@ public class TrashManager : MonoBehaviour
     {
         collectedTrash++;
         UpdateUI();
+        CheckWin();
     }
 
     void UpdateUI()
@@ -44,6 +44,17 @@ public class TrashManager : MonoBehaviour
         if (trashText != null)
         {
             trashText.text = "Trash: " + collectedTrash + " / " + totalTrash;
+        }
+    }
+
+    void CheckWin()
+    {
+        if (RescueManager.instance == null) return;
+
+        if (collectedTrash >= totalTrash &&
+            RescueManager.instance.savedAnimals >= RescueManager.instance.totalAnimals)
+        {
+            RescueManager.instance.WinGame();
         }
     }
 }

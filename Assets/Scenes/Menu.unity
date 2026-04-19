@@ -2764,12 +2764,13 @@ MonoBehaviour:
   backgroundAudioSource: {fileID: 364560397}
   effectAudioSource: {fileID: 1435406265}
   backGroundClip: {fileID: 8300000, guid: fb0d2acad16411f40bab90fc841e1a5e, type: 3}
-  jumpClip: {fileID: 0}
-  losingClip: {fileID: 0}
-  winningClip: {fileID: 0}
-  enemyAttack: {fileID: 0}
-  CutSound: {fileID: 0}
-  BagUseSound: {fileID: 0}
+  turtllesave: {fileID: 8300000, guid: 3606f8d26d170274eacf5d704ce3e60c, type: 3}
+  Octosave: {fileID: 8300000, guid: b08f36417c26208409650032562389d7, type: 3}
+  losingClip: {fileID: 8300000, guid: 0243e839782797c4696e9c54ecefeb6a, type: 3}
+  winningClip: {fileID: 8300000, guid: 04221960acc11654ca2a741e75eda61e, type: 3}
+  Stun: {fileID: 8300000, guid: 746d29c15da934640a5647c4087c33b5, type: 3}
+  CutSound: {fileID: 8300000, guid: b3299b18982144f45859d77922fa9fa5, type: 3}
+  BagUseSound: {fileID: 8300000, guid: 7cd8b898c2d53e945828008a265366c8, type: 3}
   backgroundSlider: {fileID: 1283204826}
   effectSlider: {fileID: 1238969800}
 --- !u!4 &1088217383
@@ -3016,7 +3017,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1222475649}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 714583341}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Tutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1222475649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3413,7 +3426,7 @@ GameObject:
   - component: {fileID: 1435406266}
   - component: {fileID: 1435406265}
   m_Layer: 0
-  m_Name: BackGroundAudio (1)
+  m_Name: BackGroundEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3601,14 +3614,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefc7cba21b74024cb4fe42f5a2232df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  gameUI: {fileID: 0}
   moveSpeed: 5
   maxY: 7.282786
   maxOxygen: 100
   currentOxygen: 9.4146
   oxygenDrainPerSecond: 5
   oxygenGainPerSecond: 15
-  loseUI: {fileID: 0}
+  gameUI: {fileID: 0}
+  isStunned: 0
+  stunTimer: 0
 --- !u!61 &1472343180
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4013,7 +4027,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1530799464}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 714583341}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: About
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1530799464
 MonoBehaviour:
   m_ObjectHideFlags: 0

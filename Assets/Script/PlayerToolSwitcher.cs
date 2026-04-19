@@ -57,20 +57,32 @@ public class PlayerToolSwitcher : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (currentTool == 1)
+            if (currentTool == 1) // ✂️ Scissor
             {
                 if (animator != null)
                 {
                     animator.SetTrigger("Cut");
                 }
 
+                // 👉 SOUND CẮT
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayCutSound();
+                }
+
                 TryRescueAnimal();
             }
-            else if (currentTool == 2)
+            else if (currentTool == 2) // 🛍️ Bag
             {
                 if (animator != null)
                 {
                     animator.SetTrigger("BagUse");
+                }
+
+                // 👉 SOUND BAO
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayBagUseSound();
                 }
 
                 TryCollectTrash();
@@ -88,7 +100,7 @@ public class PlayerToolSwitcher : MonoBehaviour
 
             if (trapped != null)
             {
-                trapped.Rescue();
+                trapped.Rescue(); // turtle / octo sound sẽ xử lý trong TrappedAnimal
                 break;
             }
 
@@ -96,13 +108,7 @@ public class PlayerToolSwitcher : MonoBehaviour
 
             if (animal != null)
             {
-                animal.Rescue();
-
-                if (AudioManager.instance != null)
-                {
-                    AudioManager.instance.PlayPortalSound();
-                }
-
+                animal.Rescue(); // animal thường: không phát sound
                 break;
             }
         }

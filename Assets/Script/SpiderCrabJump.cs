@@ -15,6 +15,7 @@ public class SpiderCrabMover : MonoBehaviour
     private Vector3 startPos;
     private int direction = 1;
     private float jumpTimer;
+    private bool isGrounded;
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class SpiderCrabMover : MonoBehaviour
     {
         jumpTimer -= Time.deltaTime;
 
-        bool isGrounded = false;
+        isGrounded = false;
 
         if (groundCheck != null)
         {
@@ -39,8 +40,16 @@ public class SpiderCrabMover : MonoBehaviour
             );
         }
 
-        Debug.Log("Grounded: " + isGrounded);
+        if (Mathf.Abs(transform.position.x - startPos.x) >= moveDistance)
+        {
+            direction *= -1;
+            startPos = transform.position;
+            UpdateFacing();
+        }
+    }
 
+    void FixedUpdate()
+    {
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
@@ -50,13 +59,6 @@ public class SpiderCrabMover : MonoBehaviour
                 rb.linearVelocity = new Vector2(direction * moveSpeed, jumpForce);
                 jumpTimer = jumpCooldown;
             }
-        }
-
-        if (Mathf.Abs(transform.position.x - startPos.x) >= moveDistance)
-        {
-            direction *= -1;
-            startPos = transform.position;
-            UpdateFacing();
         }
     }
 

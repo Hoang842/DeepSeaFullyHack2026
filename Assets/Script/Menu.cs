@@ -19,4 +19,20 @@ public class MainMenu : MonoBehaviour
 
         Application.Quit();
     }
+
+    public void About()
+    {
+        Time.timeScale = 1f;
+
+        // đổi tên scene của bạn ở đây
+        SceneManager.LoadScene("About");
+    }
+
+    public void Tutorial()
+    {
+        Time.timeScale = 1f;
+
+        // đổi tên scene của bạn ở đây
+        SceneManager.LoadScene("Tutorial");
+    }
 }

@@ -12,15 +12,14 @@ public class TrashCollect : MonoBehaviour
 
         if (AudioManager.instance != null)
         {
-            AudioManager.instance.PlayMurhroomSound();
+            AudioManager.instance.PlayBagUseSound();
         }
 
         if (TrashManager.instance != null)
         {
-            TrashManager.instance.AddTrash(); // 🔥 thêm dòng này
+            TrashManager.instance.AddTrash();
         }
 
         Destroy(gameObject);
     }
-
 }

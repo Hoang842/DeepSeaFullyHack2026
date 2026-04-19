@@ -16,6 +16,11 @@ public class EnemyStun : MonoBehaviour
                 float randomStun = Random.Range(minStunDuration, maxStunDuration);
                 player.StunPlayer(randomStun);
             }
+
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayStunSound();
+            }
         }
     }
 }

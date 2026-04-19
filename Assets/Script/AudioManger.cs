@@ -9,10 +9,12 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Clips")]
     [SerializeField] private AudioClip backGroundClip;
-    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip turtllesave;
+    [SerializeField] private AudioClip Octosave;
+
     [SerializeField] private AudioClip losingClip;
     [SerializeField] private AudioClip winningClip;
-    [SerializeField] private AudioClip enemyAttack;
+    [SerializeField] private AudioClip Stun;
     [SerializeField] private AudioClip CutSound;
     [SerializeField] private AudioClip BagUseSound;
 
@@ -60,13 +62,14 @@ public class AudioManager : MonoBehaviour
             backgroundAudioSource.Play();
         }
     }
+    public void PlayTurtleSound() => effectAudioSource.PlayOneShot(turtllesave);
 
-    public void PlayJumpSound() => effectAudioSource.PlayOneShot(jumpClip);
+    public void PlayOctoSound() => effectAudioSource.PlayOneShot(Octosave);
     public void PlayLosingSound() => effectAudioSource.PlayOneShot(losingClip);
     public void PlayWinningSound() => effectAudioSource.PlayOneShot(winningClip);
-    public void PlayEnemyAttackSound() => effectAudioSource.PlayOneShot(enemyAttack);
-    public void PlayPortalSound() => effectAudioSource.PlayOneShot(CutSound);
-    public void PlayMurhroomSound() => effectAudioSource.PlayOneShot(BagUseSound);
+    public void PlayStunSound() => effectAudioSource.PlayOneShot(Stun);
+    public void PlayCutSound() => effectAudioSource.PlayOneShot(CutSound);
+    public void PlayBagUseSound() => effectAudioSource.PlayOneShot(BagUseSound);
 
     public void SetBackgroundVolume(float volume)
     {

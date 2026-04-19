@@ -2,6 +2,15 @@
 
 public class TrappedAnimal : MonoBehaviour
 {
+    public enum AnimalType
+    {
+        Turtle,
+        Octopus,
+        Default
+    }
+
+    public AnimalType animalType;
+
     [Header("Sprites")]
     public Sprite trappedSprite;
     public Sprite freedSprite;
@@ -9,27 +18,18 @@ public class TrappedAnimal : MonoBehaviour
     [Header("Movement")]
     public MonoBehaviour moveScript;
 
-    [Header("Audio")]
-    public AudioClip rescueSound;
-
     private SpriteRenderer sr;
     private bool isFreed = false;
-    private AudioSource audioSource;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
 
         if (trappedSprite != null)
-        {
             sr.sprite = trappedSprite;
-        }
 
         if (moveScript != null)
-        {
             moveScript.enabled = false;
-        }
     }
 
     public void Rescue()
@@ -39,27 +39,35 @@ public class TrappedAnimal : MonoBehaviour
         isFreed = true;
 
         if (freedSprite != null)
-        {
             sr.sprite = freedSprite;
-        }
 
-        if (rescueSound != null)
-        {
-            if (audioSource != null)
-            {
-                audioSource.PlayOneShot(rescueSound);
-            }
-        }
-        else if (AudioManager.instance != null)
-        {
-            AudioManager.instance.PlayPortalSound();
-        }
+        PlaySound();
 
         if (moveScript != null)
-        {
             moveScript.enabled = true;
-        }
 
-        Debug.Log("Animal rescued and now moving.");
+        if (RescueManager.instance != null)
+        {
+            RescueManager.instance.AnimalSaved();
+        }
+    }
+
+    void PlaySound()
+    {
+        if (AudioManager.instance == null) return;
+
+        switch (animalType)
+        {
+            case AnimalType.Turtle:
+                AudioManager.instance.PlayTurtleSound();
+                break;
+
+            case AnimalType.Octopus:
+                AudioManager.instance.PlayOctoSound();
+                break;
+
+            default:
+                break;
+        }
     }
 }
