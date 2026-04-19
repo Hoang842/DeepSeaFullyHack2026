@@ -38,7 +38,7 @@ public class GameUI : MonoBehaviour
     public void BackToMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Menu");
     }
 
     private void TogglePause()
