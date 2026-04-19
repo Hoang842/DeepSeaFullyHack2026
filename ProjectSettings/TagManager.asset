@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Object
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3510619649
+    locked: 0
   - name: Ground
     uniqueID: 1436203467
     locked: 0
@@ -49,6 +52,9 @@ TagManager:
     locked: 0
   - name: ForeGround
     uniqueID: 2964230171
+    locked: 0
+  - name: GameObjects
+    uniqueID: 4098040665
     locked: 0
   m_RenderingLayers:
   - Default
