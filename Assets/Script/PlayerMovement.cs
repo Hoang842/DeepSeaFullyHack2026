@@ -2,11 +2,14 @@
 
 public class PlayerController : MonoBehaviour
 {
+
+    public GameUI gameUI;
+
     [Header("Movement")]
     public float moveSpeed = 5f;
 
     [Header("Boundary")]
-    public float maxY = 7.282786f; // mặt nước
+    public float maxY = 7.282786f;   // mặt nước, không cho đi qua
 
     [Header("Oxygen")]
     public float maxOxygen = 100f;
@@ -14,65 +17,72 @@ public class PlayerController : MonoBehaviour
     public float oxygenDrainPerSecond = 5f;
     public float oxygenGainPerSecond = 15f;
 
+    [Header("Game Over UI")]
+    public GameObject loseUI;   // kéo UI thua vào đây nếu có
+
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer sr;
 
-    private bool touchingSurface;
+    private bool touchingSurface = false;
+    private bool isGameOver = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // lấy sprite (kể cả nằm trong child)
         sr = GetComponentInChildren<SpriteRenderer>();
 
-        // setup Rigidbody cho underwater
-        rb.gravityScale = 0f;
-        rb.freezeRotation = true;
+        if (rb != null)
+        {
+            rb.gravityScale = 0f;
+            rb.freezeRotation = true;
+        }
     }
 
     void Update()
     {
-        // input
+        if (isGameOver) return;
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement = movement.normalized;
 
-        // 🎯 Flip player
-        if (movement.x > 0.01f)
-            sr.flipX = false;
-        else if (movement.x < -0.01f)
-            sr.flipX = true;
+        if (sr != null)
+        {
+            if (movement.x > 0.01f)
+                sr.flipX = false;
+            else if (movement.x < -0.01f)
+                sr.flipX = true;
+        }
 
-        // 💧 Oxygen xử lý
         if (touchingSurface)
-        {
             currentOxygen += oxygenGainPerSecond * Time.deltaTime;
-        }
         else
-        {
             currentOxygen -= oxygenDrainPerSecond * Time.deltaTime;
-        }
 
         currentOxygen = Mathf.Clamp(currentOxygen, 0f, maxOxygen);
+
+        if (currentOxygen <= 0f)
+        {
+            GameOver();
+        }
     }
 
     void FixedUpdate()
     {
-        // movement
+        if (isGameOver) return;
+        if (rb == null) return;
+
         rb.linearVelocity = movement * moveSpeed;
 
         Vector2 pos = rb.position;
 
-        // 🚫 chặn không cho vượt quá mặt nước
         if (pos.y >= maxY)
         {
             pos.y = maxY;
             rb.position = pos;
 
-            // chặn velocity đi lên
-            if (rb.linearVelocity.y > 0)
+            if (rb.linearVelocity.y > 0f)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             }
@@ -83,5 +93,21 @@ public class PlayerController : MonoBehaviour
         {
             touchingSurface = false;
         }
+    }
+
+    void GameOver()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+        currentOxygen = 0f;
+
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        if (gameUI != null)
+            gameUI.ShowLoseUI();
+
+        Time.timeScale = 0f;
     }
 }
