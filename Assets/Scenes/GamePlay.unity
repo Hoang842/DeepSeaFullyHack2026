@@ -2846,10 +2846,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eb6329def51c34fac7a71ed1803dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrappedAnimal
+  animalType: 0
   trappedSprite: {fileID: 21300000, guid: e0bafd64cd9f4284cb40ffaaf9e48187, type: 3}
   freedSprite: {fileID: 1599391264281210807, guid: 331cea34a9aedf640aa300cfca1942ca, type: 3}
   moveScript: {fileID: 543004182}
-  rescueSound: {fileID: 8300000, guid: b08f36417c26208409650032562389d7, type: 3}
 --- !u!1 &559379070
 GameObject:
   m_ObjectHideFlags: 0

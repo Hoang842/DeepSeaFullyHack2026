@@ -83,7 +83,7 @@ public class GameUI : MonoBehaviour
     public void Home()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Menu");
     }
 
     public void Volume()

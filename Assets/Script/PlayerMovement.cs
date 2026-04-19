@@ -146,6 +146,10 @@ public class PlayerController : MonoBehaviour
             gameUI.ShowLoseUI();
         }
 
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayLosingSound();
+        }
         Time.timeScale = 0f;
         Debug.Log("Game Over - Out of Oxygen");
     }
