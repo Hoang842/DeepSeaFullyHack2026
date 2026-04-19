@@ -2,14 +2,11 @@
 
 public class PlayerController : MonoBehaviour
 {
-
-    public GameUI gameUI;
-
     [Header("Movement")]
     public float moveSpeed = 5f;
 
     [Header("Boundary")]
-    public float maxY = 7.282786f;   // mặt nước, không cho đi qua
+    public float maxY = 7.282786f;
 
     [Header("Oxygen")]
     public float maxOxygen = 100f;
@@ -18,12 +15,15 @@ public class PlayerController : MonoBehaviour
     public float oxygenGainPerSecond = 15f;
 
     [Header("Game Over UI")]
-    public GameObject loseUI;   // kéo UI thua vào đây nếu có
+    public GameUI gameUI;
+
+    [Header("Stun")]
+    public bool isStunned = false;
+    public float stunTimer = 0f;
 
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer sr;
-
     private bool touchingSurface = false;
     private bool isGameOver = false;
 
@@ -43,9 +43,25 @@ public class PlayerController : MonoBehaviour
     {
         if (isGameOver) return;
 
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        movement = movement.normalized;
+        // xử lý stun
+        if (isStunned)
+        {
+            stunTimer -= Time.deltaTime;
+
+            movement = Vector2.zero;
+
+            if (stunTimer <= 0f)
+            {
+                isStunned = false;
+                stunTimer = 0f;
+            }
+        }
+        else
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            movement = movement.normalized;
+        }
 
         if (sr != null)
         {
@@ -73,7 +89,10 @@ public class PlayerController : MonoBehaviour
         if (isGameOver) return;
         if (rb == null) return;
 
-        rb.linearVelocity = movement * moveSpeed;
+        if (isStunned)
+            rb.linearVelocity = Vector2.zero;
+        else
+            rb.linearVelocity = movement * moveSpeed;
 
         Vector2 pos = rb.position;
 
@@ -95,6 +114,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void StunPlayer(float duration)
+    {
+        if (isGameOver) return;
+
+        isStunned = true;
+        stunTimer = duration;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        Debug.Log("Player stunned for " + duration + " seconds");
+    }
+
     void GameOver()
     {
         if (isGameOver) return;
@@ -103,11 +137,16 @@ public class PlayerController : MonoBehaviour
         currentOxygen = 0f;
 
         if (rb != null)
+        {
             rb.linearVelocity = Vector2.zero;
+        }
 
         if (gameUI != null)
+        {
             gameUI.ShowLoseUI();
+        }
 
         Time.timeScale = 0f;
+        Debug.Log("Game Over - Out of Oxygen");
     }
 }
