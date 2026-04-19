@@ -19201,6 +19201,7 @@ GameObject:
   - component: {fileID: 1736842441}
   - component: {fileID: 1736842446}
   - component: {fileID: 1736842447}
+  - component: {fileID: 1736842448}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -19411,6 +19412,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1736842448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736842440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9e1cf82614bf847b2acefa2507dc12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerToolSwitcher
 --- !u!1 &1775467038
 GameObject:
   m_ObjectHideFlags: 0
