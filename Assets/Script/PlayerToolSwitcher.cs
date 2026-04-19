@@ -84,6 +84,14 @@ public class PlayerToolSwitcher : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
+            TrappedAnimal trapped = hit.GetComponent<TrappedAnimal>();
+
+            if (trapped != null)
+            {
+                trapped.Rescue();
+                break;
+            }
+
             AnimalRescue animal = hit.GetComponent<AnimalRescue>();
 
             if (animal != null)
