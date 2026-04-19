@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TrappedAnimal : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class TrappedAnimal : MonoBehaviour
 
     [Header("Movement")]
     public MonoBehaviour moveScript;
+
+    [Header("Animation")]
+    public bool useDanceAnimation = false;
+    public Animator animator;
+    public float danceDuration = 2f;
 
     private SpriteRenderer sr;
     private bool isFreed = false;
@@ -38,18 +44,39 @@ public class TrappedAnimal : MonoBehaviour
 
         isFreed = true;
 
-        if (freedSprite != null)
-            sr.sprite = freedSprite;
-
         PlaySound();
-
-        if (moveScript != null)
-            moveScript.enabled = true;
 
         if (RescueManager.instance != null)
         {
             RescueManager.instance.AnimalSaved();
         }
+
+        if (useDanceAnimation && animator != null)
+        {
+            StartCoroutine(PlayDanceThenFinish());
+        }
+        else
+        {
+            FinishRescue();
+        }
+    }
+
+    IEnumerator PlayDanceThenFinish()
+    {
+        animator.SetTrigger("Dance");
+
+        yield return new WaitForSeconds(danceDuration);
+
+        FinishRescue();
+    }
+
+    void FinishRescue()
+    {
+        if (freedSprite != null && sr != null)
+            sr.sprite = freedSprite;
+
+        if (moveScript != null)
+            moveScript.enabled = true;
     }
 
     void PlaySound()
@@ -64,9 +91,6 @@ public class TrappedAnimal : MonoBehaviour
 
             case AnimalType.Octopus:
                 AudioManager.instance.PlayOctoSound();
-                break;
-
-            default:
                 break;
         }
     }

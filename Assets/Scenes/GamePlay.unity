@@ -2850,6 +2850,9 @@ MonoBehaviour:
   trappedSprite: {fileID: 21300000, guid: e0bafd64cd9f4284cb40ffaaf9e48187, type: 3}
   freedSprite: {fileID: 1599391264281210807, guid: 331cea34a9aedf640aa300cfca1942ca, type: 3}
   moveScript: {fileID: 543004182}
+  useDanceAnimation: 0
+  animator: {fileID: 0}
+  danceDuration: 2
 --- !u!1 &559379070
 GameObject:
   m_ObjectHideFlags: 0
@@ -22721,6 +22724,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1610860354}
     m_Modifications:
+    - target: {fileID: 3453911363545730353, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1583221318787248113, guid: 20291e04be9b3114ab3371f7e25fea21, type: 3}
     - target: {fileID: 6984206855694103104, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.62
@@ -22765,13 +22772,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: turtle1trash_0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7072357038971440631, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7564652614825226867, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5974343947865717145}
+    - targetCorrespondingSourceObject: {fileID: 7564652614825226867, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5974343947865717146}
+    - targetCorrespondingSourceObject: {fileID: 7564652614825226867, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5974343947865717150}
   m_SourcePrefab: {fileID: 100100000, guid: 74ab198daf733694a93139b7f1b5a4bc, type: 3}
 --- !u!1001 &3196854195082962922
 PrefabInstance:
@@ -23169,6 +23183,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishSwim
   speed: 2
   moveDistance: 3
+--- !u!95 &5974343947865717146
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4317428160710095233}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2976d590e69d9284d90133b5c85b9957, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5974343947865717150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4317428160710095233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64eb6329def51c34fac7a71ed1803dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrappedAnimal
+  animalType: 0
+  trappedSprite: {fileID: 1583221318787248113, guid: 20291e04be9b3114ab3371f7e25fea21, type: 3}
+  freedSprite: {fileID: -6937829826739957149, guid: cd049b9d4ed3fdb4ab5fc7d8e08a91b2, type: 3}
+  moveScript: {fileID: 0}
+  useDanceAnimation: 1
+  animator: {fileID: 5974343947865717146}
+  danceDuration: 2
 --- !u!1 &6138081955993740605 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2528880247644680814, guid: 259b48ae5b6340941adb11187bbd7618, type: 3}
