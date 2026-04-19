@@ -5,6 +5,8 @@ public class PlayerToolSwitcher : MonoBehaviour
     private Animator animator;
     private int currentTool = 0; // 0 = none, 1 = scissor, 2 = bag
 
+    public float interactRadius = 1.2f;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -35,16 +37,56 @@ public class PlayerToolSwitcher : MonoBehaviour
             if (currentTool == 1)
             {
                 animator.SetTrigger("Cut");
+                TryRescueAnimal();
             }
             else if (currentTool == 2)
             {
                 animator.SetTrigger("BagUse");
+                TryCollectTrash();
             }
         }
     }
 
-    public int GetCurrentTool()
+    void TryRescueAnimal()
     {
-        return currentTool;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRadius);
+
+        foreach (Collider2D hit in hits)
+        {
+            AnimalRescue animal = hit.GetComponent<AnimalRescue>();
+
+            if (animal != null)
+            {
+                animal.Rescue();
+
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayPortalSound();
+                }
+
+                break;
+            }
+        }
+    }
+    void TryCollectTrash()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.2f);
+
+        foreach (Collider2D hit in hits)
+        {
+            TrashCollect trash = hit.GetComponent<TrashCollect>();
+
+            if (trash != null)
+            {
+                trash.Collect();
+                break;
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, interactRadius);
     }
 }
