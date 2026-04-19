@@ -3,10 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("Lose UI")]
     public GameObject loseUI;
 
-    // Hiện màn hình thua
+    [Header("Pause UI")]
+    public GameObject pauseMenu;
+
+    private bool isPaused = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+    }
+
     public void ShowLoseUI()
     {
         if (loseUI != null)
@@ -15,7 +27,6 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    // Nút Play Again
     public void PlayAgain()
     {
         Time.timeScale = 1f;
@@ -24,11 +35,58 @@ public class GameUI : MonoBehaviour
         SceneManager.LoadScene(currentScene.buildIndex);
     }
 
-    // Nút về Menu
     public void BackToMenu()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
 
-        SceneManager.LoadScene("MainMenu"); // nhớ đặt đúng tên scene menu
+    private void TogglePause()
+    {
+        if (loseUI != null && loseUI.activeSelf)
+        {
+            return;
+        }
+
+        if (isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+        }
+
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void Home()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Volume()
+    {
     }
 }
