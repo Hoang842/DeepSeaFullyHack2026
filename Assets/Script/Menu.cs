@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
 
         // đổi tên scene của bạn ở đây
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("GamePlay");
     }
 
     // Quit button

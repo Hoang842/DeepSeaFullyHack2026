@@ -1,19 +1,4 @@
-﻿// ------------------------------------------------------------
-// Author: Hoang Nguyen
-// Script: AudioManager.cs
-// Purpose: Manages all game audio — background music, sound effects,
-//          and volume settings that persist across scenes.
-// Source: YouTube Video - "Unity Audio Tutorial"
-// Channel: Làm Game Dạo
-// URL: https://www.youtube.com/watch?v=8K_QWs1Hj5A&t=1994s
-// Date Accessed: November 2, 2025
-// Modifications by Hoang Nguyen:
-// - PlayerPrefs saving for persistent volume settings
-// - Slider self-registration via AudioSliderBinder (no tag lookups)
-// - Persistent singleton with DontDestroyOnLoad
-// ------------------------------------------------------------
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
@@ -31,8 +16,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip CutSound;
     [SerializeField] private AudioClip BagUseSound;
 
-
-
     [Header("Volume Sliders (Registered at runtime)")]
     [SerializeField] private Slider backgroundSlider;
     [SerializeField] private Slider effectSlider;
@@ -41,7 +24,6 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern to keep AudioManager persistent
         if (instance == null)
         {
             instance = this;
@@ -53,26 +35,28 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Load saved volumes from PlayerPrefs
         float savedBgm = PlayerPrefs.GetFloat("BGMVolume", 1f);
         float savedSfx = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
         backgroundAudioSource.volume = savedBgm;
         effectAudioSource.volume = savedSfx;
     }
-
 
     private void Start()
     {
         PlayBackGroundMusic();
     }
 
-    // ---------------- MUSIC & SOUND ----------------
     public void PlayBackGroundMusic()
     {
         if (backgroundAudioSource.clip != backGroundClip)
         {
             backgroundAudioSource.clip = backGroundClip;
             backgroundAudioSource.loop = true;
+        }
+
+        if (!backgroundAudioSource.isPlaying)
+        {
             backgroundAudioSource.Play();
         }
     }
@@ -84,7 +68,6 @@ public class AudioManager : MonoBehaviour
     public void PlayPortalSound() => effectAudioSource.PlayOneShot(CutSound);
     public void PlayMurhroomSound() => effectAudioSource.PlayOneShot(BagUseSound);
 
-    // ---------------- VOLUME SETTINGS ----------------
     public void SetBackgroundVolume(float volume)
     {
         backgroundAudioSource.volume = volume;
@@ -99,16 +82,13 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // ---------------- SLIDER REGISTRATION (Option A) ----------------
     public void RegisterBgmSlider(Slider slider)
     {
-        // Detach our handler from any previous slider
         if (backgroundSlider != null)
             backgroundSlider.onValueChanged.RemoveListener(SetBackgroundVolume);
 
         backgroundSlider = slider;
 
-        // Sync UI to current volume, then bind our handler
         backgroundSlider.value = backgroundAudioSource.volume;
         backgroundSlider.onValueChanged.RemoveListener(SetBackgroundVolume);
         backgroundSlider.onValueChanged.AddListener(SetBackgroundVolume);
@@ -125,5 +105,4 @@ public class AudioManager : MonoBehaviour
         effectSlider.onValueChanged.RemoveListener(SetEffectVolume);
         effectSlider.onValueChanged.AddListener(SetEffectVolume);
     }
-
 }
