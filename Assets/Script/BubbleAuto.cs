@@ -2,22 +2,37 @@
 
 public class BubbleAuto : MonoBehaviour
 {
-    public float moveSpeed = 1.5f;
-    public float lifeTime = 2f;
+    [Header("Movement")]
+    public float minSpeed = 1f;
+    public float maxSpeed = 2f;
+
+    [Header("Lifetime")]
+    public float minLifeTime = 1f;
+    public float maxLifeTime = 3f;
     public float respawnDelay = 1.5f;
+
+    [Header("Oxygen")]
     public float oxygenAmount = 20f;
 
+    private float moveSpeed;
     private Vector3 spawnPosition;
     private bool isCollected = false;
 
     void Start()
     {
         spawnPosition = transform.position;
-        Invoke(nameof(DestroySelf), lifeTime);
+
+        // random speed
+        moveSpeed = Random.Range(minSpeed, maxSpeed);
+
+        // random lifetime
+        float randomLife = Random.Range(minLifeTime, maxLifeTime);
+        Invoke(nameof(DestroySelf), randomLife);
     }
 
     void Update()
     {
+        // bay lên
         transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
     }
 
@@ -25,11 +40,16 @@ public class BubbleAuto : MonoBehaviour
     {
         if (isCollected) return;
 
+        RespawnBubble();
+        Destroy(gameObject);
+    }
+
+    void RespawnBubble()
+    {
         GameObject newBubble = Instantiate(gameObject, spawnPosition, Quaternion.identity);
+
         newBubble.SetActive(false);
         newBubble.GetComponent<BubbleAuto>().StartRespawn(respawnDelay);
-
-        Destroy(gameObject);
     }
 
     public void StartRespawn(float delay)
@@ -58,10 +78,7 @@ public class BubbleAuto : MonoBehaviour
 
             isCollected = true;
 
-            GameObject newBubble = Instantiate(gameObject, spawnPosition, Quaternion.identity);
-            newBubble.SetActive(false);
-            newBubble.GetComponent<BubbleAuto>().StartRespawn(respawnDelay);
-
+            RespawnBubble();
             Destroy(gameObject);
         }
     }
